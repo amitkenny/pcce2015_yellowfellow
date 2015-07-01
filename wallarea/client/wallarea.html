@@ -12,4 +12,15 @@
         </form>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col s6 offset-s3">
+        <div class="collection">
+          {{#each yells}}
+        <div class="collection-item">{{yell}} - {{date}}</div>
+          {{/each}}
+        <div id="loadmore" class="collection-item"><button class="btn orange darken-2 waves-effect">Load More</button></div>
+        </div>
+    </div>
+  </div>
 </template>
