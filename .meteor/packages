@@ -8,3 +8,5 @@ meteor-platform
 autopublish
 insecure
 materialize:materialize
+accounts-password
+accounts-ui

@@ -34,23 +34,40 @@ Template.wallarea.events({
   var yellvalue= Session.get('yellvalue');
   if(!Session.get('yellToEdit'))
   {
-    if(yellvalue.length > 5){
-      Yells.insert({yell : yellvalue,date : new Date()})
-      Session.set('yellvalue','')
+    if(Meteor.userId())
+    {
+      if(yellvalue.length > 5){
+        Yells.insert({yell : yellvalue,createdAt : new Date(), user : Meteor.userId()})
+        Session.set('yellvalue','')
+      }
+    }
+    else {
+        Session.set('yellvalue','')
+          Session.set('yellToEdit',false)
+      Materialize.toast('Bro! You gotcha login.',4000);
     }
   }
   else {
     var item_id = Session.get('yellToEdit');
-    Yells.update({_id : item_id},{$set : {yell : Session.get('yellvalue')}},function(err){
-      if(err)
-      {
-        Materialize.toast(err.reason,4000);
-      }
-      else {
-        Session.set('yellToEdit',false);
-        Session.set('yellvalue','')
-      }
-    })
+    if(Meteor.userId() === Yells.findOne({_id : item_id}).user)
+    {
+      Yells.update({_id : item_id},{$set : {yell : Session.get('yellvalue')}},function(err){
+        if(err)
+        {
+          Materialize.toast(err.reason,4000);
+        }
+        else {
+          Session.set('yellToEdit',false);
+          Session.set('yellvalue','')
+        }
+      })
+    }
+    else {
+      Session.set('yellvalue','')
+        Session.set('yellToEdit',false)
+      Materialize.toast('Dude! You dont own that yell!',4000);
+    }
+
   }
 
 
@@ -68,12 +85,21 @@ Template.wallarea.events({
 
 'click .deleteItem' : function(event,template){
   var item_id = event.currentTarget.dataset.id;
-  Yells.remove({_id : item_id},function(err){
-    if(err)
-    {
-      Materialize.toast(err.reason,4000);
-    }
-  });
+  if(Meteor.userId() === Yells.findOne({_id : item_id}).user)
+  {
+    Yells.remove({_id : item_id},function(err){
+      if(err)
+      {
+        Materialize.toast(err.reason,4000);
+      }
+    });
+  }
+  else {
+    Session.set('yellvalue','')
+      Session.set('yellToEdit',false)
+    Materialize.toast('Dude!! Get a life! Go log in.',4000);
+  }
+
   return false;
 },
 
