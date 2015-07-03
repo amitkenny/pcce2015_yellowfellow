@@ -47,13 +47,23 @@
 
         {{#each yells}}
 
+      {{#if isItMe user}}
+      <div class="collection-item yellow lighten-2">
+        {{yell}}
+        <span class="right-align red-text"><a href="" data-id="{{_id}}" class="red-text deleteItem">DEL</a></span>
+        | <span class="right-align"><a href="" data-id="{{_id}}" class="editItem">EDIT</a></span>
+
+      <br> <small>{{createdAt}}</small>
+      </div>
+      {{else}}
       <div class="collection-item">
         {{yell}}
         <span class="right-align red-text"><a href="" data-id="{{_id}}" class="red-text deleteItem">DEL</a></span>
         | <span class="right-align"><a href="" data-id="{{_id}}" class="editItem">EDIT</a></span>
 
-
+      <br> <small>{{createdAt}}</small>
       </div>
+      {{/if}}
         {{/each}}
         {{#if isYellCountGreaterThan5 }}
       <div id="loadmore" class="collection-item"><button class="btn orange darken-2 waves-effect">Load More</button></div>

@@ -8,7 +8,7 @@ Template.wallarea.onRendered(function(){
 
 Template.wallarea.helpers({
   yells : function(){
-    return Yells.find({},{sort: {yell : 1},limit: Session.get('limit'),fields : {yell: 1}});
+    return Yells.find({},{sort: {createdAt : -1},limit: Session.get('limit'),fields : {yell: 1,createdAt : 1, user: 1}});
   },
   yellcount : function(){
     return Yells.find({}).count();
@@ -21,6 +21,9 @@ Template.wallarea.helpers({
   },
   yellvalue : function(){
     return Session.get('yellvalue');
+  },
+  isItMe : function(id){
+    return id === Meteor.userId();
   }
 })
 
