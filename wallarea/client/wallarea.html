@@ -4,6 +4,7 @@
     {{> loginButtons}}
   </div>
 </div>
+{{#if Template.subscriptionsReady}}
 {{#unless currentUser}}
 <div class="row">
   <div class="col s6 offset-s3">
@@ -13,7 +14,10 @@
         {{#each yells}}
 
       <div class="collection-item">
-        {{yell}}
+
+        {{yell}}<br>
+        {{user}}
+        <br><small>{{createdAt}}</small>
 
 
       </div>
@@ -29,7 +33,7 @@
 
 
 
-  <div class="col s6 offset-s3">
+  <div class="col s6 offset-s3 center-align">
         <form method="post" id="yellbox">
         <div class="input-field yellarea">
           <input type="text" name="yelltext" id="yelltext" value="{{yellvalue}}">
@@ -38,6 +42,13 @@
           {{/unless}}
         </div>
       </form>
+      {{#if ifYellLengthGreater140}}
+      <i><small class="red-text">{{yellLength}}</small> characters remaining</i>
+      {{else}}
+        {{#unless ifYellLength0}}
+          <i><small class="blue-text">{{yellLength}}</small> characters remaining</i>
+        {{/unless}}
+      {{/if}}
   </div>
 </div>
 <div class="row">
@@ -72,4 +83,52 @@
   </div>
 </div>
 {{/unless}}
+{{else}}
+<div class="row">
+  <div class="col s6 offset-s3 blue-text">
+    <div class="preloader-wrapper big active">
+       <div class="spinner-layer spinner-blue">
+         <div class="circle-clipper left">
+           <div class="circle"></div>
+         </div><div class="gap-patch">
+           <div class="circle"></div>
+         </div><div class="circle-clipper right">
+           <div class="circle"></div>
+         </div>
+       </div>
+
+       <div class="spinner-layer spinner-red">
+         <div class="circle-clipper left">
+           <div class="circle"></div>
+         </div><div class="gap-patch">
+           <div class="circle"></div>
+         </div><div class="circle-clipper right">
+           <div class="circle"></div>
+         </div>
+       </div>
+
+       <div class="spinner-layer spinner-yellow">
+         <div class="circle-clipper left">
+           <div class="circle"></div>
+         </div><div class="gap-patch">
+           <div class="circle"></div>
+         </div><div class="circle-clipper right">
+           <div class="circle"></div>
+         </div>
+       </div>
+
+       <div class="spinner-layer spinner-green">
+         <div class="circle-clipper left">
+           <div class="circle"></div>
+         </div><div class="gap-patch">
+           <div class="circle"></div>
+         </div><div class="circle-clipper right">
+           <div class="circle"></div>
+         </div>
+       </div>
+     </div>
+
+</div>
+</div>
+{{/if}}
 </template>

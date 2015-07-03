@@ -10,7 +10,7 @@ Yells.allow({
         else if(doc.user !== userId){
           return false;
         }
-        else if(doc.yell.length < 5){
+        else if(doc.yell.length < 5 && doc.yell.length>14){
           return false;
         }
         else if(!_.isDate(doc.createdAt)){
@@ -49,4 +49,12 @@ Yells.allow({
     return false;
   }
 
+})
+
+
+
+Meteor.users.deny({
+  update : function(userId,doc,fieldNames){
+    return false;
+  }
 })

@@ -1,14 +1,21 @@
-Template.wallarea.onRendered(function(){
+//Meteor.subscribe('allyells');
 
+Template.wallarea.onRendered(function(){
+  this.subscribe('allyells');
   Session.set('limit',5);
   Session.set('yellvalue','');
   Session.set('yellToEdit',false);
+  Session.set('yellLength',140);
 })
 
 
 Template.wallarea.helpers({
   yells : function(){
-    return Yells.find({},{sort: {createdAt : -1},limit: Session.get('limit'),fields : {yell: 1,createdAt : 1, user: 1}});
+    if(Meteor.userId()){
+      return Yells.find({},{sort : {createdAt : -1},limit: Session.get('limit'),fields : {yell: 1,createdAt : 1, user: 1}});
+    }
+    return Yells.find({},{limit: Session.get('limit'),fields : {yell: 1,createdAt : 1, user: 1}});
+
   },
   yellcount : function(){
     return Yells.find({}).count();
@@ -24,13 +31,23 @@ Template.wallarea.helpers({
   },
   isItMe : function(id){
     return id === Meteor.userId();
+  },
+  yellLength : function(){
+    return Session.get('yellLength');
+  },
+  ifYellLengthGreater140 : function(){
+    return Session.get('yellLength') < 0;
+  },
+  ifYellLength0 : function(){
+    return Session.get('yellLength') == 140;
   }
 })
 
 
 Template.wallarea.events({
 'keyup #yelltext' : function(event,template){
-  Session.set('yellvalue', event.currentTarget.value);
+  Session.set('yellvalue', event.currentTarget.value.trim());
+  Session.set('yellLength',140 - event.currentTarget.value.length)
 },
 
 'submit #yellbox' : function(event,template){
@@ -39,7 +56,7 @@ Template.wallarea.events({
   {
     if(Meteor.userId())
     {
-      if(yellvalue.length > 5){
+      if(yellvalue.length > 5 && yellvalue.length<140){
         Yells.insert({yell : yellvalue,createdAt : new Date(), user : Meteor.userId()})
         Session.set('yellvalue','')
       }
