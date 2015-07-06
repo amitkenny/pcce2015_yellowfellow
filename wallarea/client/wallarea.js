@@ -71,16 +71,16 @@ Template.wallarea.events({
     var item_id = Session.get('yellToEdit');
     if(Meteor.userId() === Yells.findOne({_id : item_id}).user)
     {
-      Yells.update({_id : item_id},{$set : {yell : Session.get('yellvalue')}},function(err){
-        if(err)
-        {
+      Meteor.call('updateYell',item_id,Session.get('yellvalue'),function(err,res){
+        if(err){
           Materialize.toast(err.reason,4000);
         }
         else {
-          Session.set('yellToEdit',false);
+          event.currentTarget.value = "";
           Session.set('yellvalue','')
+          Session.set('yellToEdit',false)
         }
-      })
+      } )
     }
     else {
       Session.set('yellvalue','')

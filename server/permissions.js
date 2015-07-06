@@ -30,24 +30,24 @@ Yells.allow({
     return false;
   },
 
-  update : function(userId, doc, fieldNames, modifier){
-    if(userId && doc.user === userId){
-
-      if(_.contains(fieldNames,'createdAt')){
-        return false;
-      }
-      else if(doc.yell.length < 5){
-        return false;
-      }
-      else if(_.isEmpty(doc)){
-          return false;
-        }
-
-      return true;
-    }
-
-    return false;
-  }
+  // update : function(userId, doc, fieldNames, modifier){
+  //   if(userId && doc.user === userId){
+  //
+  //     if(_.contains(fieldNames,'createdAt')){
+  //       return false;
+  //     }
+  //     else if(doc.yell.length < 5){
+  //       return false;
+  //     }
+  //     else if(_.isEmpty(doc)){
+  //         return false;
+  //       }
+  //
+  //     return true;
+  //   }
+  //
+  //   return false;
+  // }
 
 })
 
