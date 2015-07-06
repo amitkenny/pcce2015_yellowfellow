@@ -22,7 +22,7 @@ Meteor.methods({
                 if(_.isString(newYellValue)){
                     if( newYellValue.length >= 5 && newYellValue.length<140 ){
 
-                          return Yells.update({_id : id},{$set : {yell : newYellValue.trim()}});
+                         return Yells.update({_id : id},{$set : {yell : newYellValue.trim()}});
                     }
                     else {
                         throw new Meteor.Error('invalidyell', 'Your yell must be between 5 and 140 characters only.');

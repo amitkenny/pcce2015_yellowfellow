@@ -8,3 +8,5 @@ meteor-platform
 materialize:materialize
 accounts-password
 accounts-ui
+dpid:user-presence
+amr:parsley.js

@@ -2,10 +2,20 @@
 
 Template.wallarea.onRendered(function(){
   this.subscribe('allyells');
+  this.subscribe('users');
   Session.set('limit',5);
   Session.set('yellvalue','');
   Session.set('yellToEdit',false);
   Session.set('yellLength',140);
+
+  this.autorun(function(){
+    if(Meteor.userId()){
+      Template.instance().$('#loginModal').closeModal();
+    }
+  })
+
+
+
 })
 
 
@@ -40,6 +50,9 @@ Template.wallarea.helpers({
   },
   ifYellLength0 : function(){
     return Session.get('yellLength') == 140;
+  },
+  whosYell : function(userid){
+    return Meteor.users.findOne({_id : userid}).emails[0].address
   }
 })
 
@@ -128,6 +141,17 @@ Template.wallarea.events({
   Session.set('yellToEdit',item_id);
   Session.set('yellvalue',Yells.findOne({_id : item_id}).yell);
   return false;
+},
+'click #logout' : function(){
+  Meteor.logout(function(err){
+    if(err){
+      Materialize.toast('Logout Error',4000);
+    }
+  });
+  return false;
+},
+'click #login' :function(event,template){
+template.$('#loginModal').openModal();
 }
 
 })

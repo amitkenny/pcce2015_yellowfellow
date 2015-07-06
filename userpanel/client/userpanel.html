@@ -1,0 +1,10 @@
+<template name="userpanel">
+  <div class="row">
+    {{#each userlist}}
+        {{#if isUserOnline _id}}
+            <div><span class="green-text"><i class="material-icons">radio_button_checked</i></span> <span class="black-text">{{#each emails}}{{address}}{{/each}}</span></div>
+        
+        {{/if}}
+    {{/each}}
+  </div>
+</template>
