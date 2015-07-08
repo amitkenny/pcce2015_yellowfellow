@@ -1,0 +1,14 @@
+<template name="startlayout">
+<div class="row background yellow lighten-1">
+    {{> startheader}}
+</div>
+<div class="row">
+  <div class="col s6 offset-s3">
+    <div class="card yellow lighten-1">
+      <div class="card-content white-text">
+        {{> yield 'cardcontent'}}
+      </div>
+    </div>
+  </div>
+</div>
+</template>

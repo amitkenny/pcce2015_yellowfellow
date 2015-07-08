@@ -10,7 +10,7 @@ Meteor.publish('allyells',function(){
 
 
 Meteor.publish('users',function(){
-  return Meteor.users.find({},{fields : {emails : 1}});
+  return Meteor.users.find({},{fields : {emails : 1,services : 1}});
 })
 
 

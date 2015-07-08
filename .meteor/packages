@@ -10,3 +10,10 @@ accounts-password
 accounts-ui
 dpid:user-presence
 amr:parsley.js
+mdg:geolocation
+jaymc:google-reverse-geocode
+iron:router
+alanning:roles
+accounts-google
+service-configuration
+fastclick

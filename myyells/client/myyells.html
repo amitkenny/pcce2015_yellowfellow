@@ -1,0 +1,19 @@
+<template name="myyells">
+  <h1>My Yells</h1>
+  <div class="row">
+    <div class="col s6 offset-s3">
+      <div class="collection">
+        {{#each yells}}
+        <div class="collection-item yellow lighten-2">
+          {{yell}}
+
+          <span class="right-align red-text"><a href="" data-id="{{_id}}" class="red-text deleteItem">DEL</a></span>
+          | <span class="right-align"><a href="" data-id="{{_id}}" class="editItem">EDIT</a></span>
+
+        <br> <small>{{createdAt}}</small>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>

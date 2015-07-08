@@ -12,7 +12,20 @@ Template.wallarea.onRendered(function(){
     if(Meteor.userId()){
       Template.instance().$('#loginModal').closeModal();
     }
+
+    if(Geolocation.latLng()){
+      var lat = Geolocation.latLng().lat;
+      var lng = Geolocation.latLng().lng;
+      reverseGeocode.getLocation(lat,lng,function(location){
+        Session.set('location',reverseGeocode.getAddrStr());
+      })
+
+    }
   })
+
+
+
+
 
 
 
@@ -52,7 +65,17 @@ Template.wallarea.helpers({
     return Session.get('yellLength') == 140;
   },
   whosYell : function(userid){
-    return Meteor.users.findOne({_id : userid}).emails[0].address
+    var user = Meteor.users.findOne({_id : userid});
+    if(user.emails )
+    {
+      return user.emails[0].address;
+    }
+    else {
+      return user.services.google.email;
+    }
+  },
+  location : function(){
+    return Session.get('location')
   }
 })
 
@@ -71,6 +94,7 @@ Template.wallarea.events({
     {
       if(yellvalue.length > 5 && yellvalue.length<140){
         Yells.insert({yell : yellvalue,createdAt : new Date(), user : Meteor.userId()})
+        event.currentTarget.value = "";
         Session.set('yellvalue','')
       }
     }
@@ -148,7 +172,8 @@ Template.wallarea.events({
       Materialize.toast('Logout Error',4000);
     }
   });
-  return false;
+
+
 },
 'click #login' :function(event,template){
 template.$('#loginModal').openModal();

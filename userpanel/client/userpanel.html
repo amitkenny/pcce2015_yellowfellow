@@ -2,8 +2,27 @@
   <div class="row">
     {{#each userlist}}
         {{#if isUserOnline _id}}
-            <div><span class="green-text"><i class="material-icons">radio_button_checked</i></span> <span class="black-text">{{#each emails}}{{address}}{{/each}}</span></div>
-        
+            <div><span class="green-text"><i class="material-icons">radio_button_checked</i></span> <span class="black-text">
+
+              {{#if emails}}
+              {{#each emails}}{{address}}{{/each}}
+              {{else}}
+              {{#with services}}
+                {{#with google}}
+                  {{email}}
+                {{/with}}
+              {{/with}}
+              {{/if}}
+
+              </span>
+
+              {{#if isInRole 'admin'}}
+              <span>
+                <button class="btn waves-effect waves-light small red">BLOCK</button></span>
+
+              {{/if}}
+                </div>
+
         {{/if}}
     {{/each}}
   </div>
