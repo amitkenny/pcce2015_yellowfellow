@@ -1,6 +1,6 @@
 Yells.allow({
   insert : function(userId, doc){
-      if(userId )){
+      if(userId ){
         if(_.isEmpty(doc)){
           return false;
         }
